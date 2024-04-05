@@ -2,53 +2,46 @@ from pymongo import MongoClient
 import bcrypt
 
 client = MongoClient("mongodb://127.0.0.1:27017")
-db = client.playersDB
+db = client.ProjectDB
 staff = db.staffCollection
 
 #Create Dataset for the staff used for authentication later
 
 staff_list = [
-          { 
-            "name" : "Martin O'Neill",
-            "username" : "moneill",  
-            "password" : b"m_oneill",
-            "role" : "Manager",
-            "email" : "moneill@IFAemail.com",
-            "admin" : False
-          },
-          { 
-            "name" : "Jimmy Nicholl",
-            "username" : "jnicholl",  
-            "password" : b"j_nicholl",
-            "role" : "Assistant Manager",
-            "email" : "jnicholl@IFAemail.com",
-            "admin" : False
-          },
-          { 
-            "name" : "Aaron Hughes",
-            "username" : "ahughes",  
-            "password" : b"a_hughes",
-            "role" : "Senior Coach",
-            "email" : "ahughes@IFAemail.com",
-            "admin" : False
-          },        
-          { 
-            "name" : "Diarmuld O'Carroll",
-            "username" : "docarroll",  
-            "password" : b"d_ocarroll",
-            "role" : "Senior Coach",
-            "email" : "docarroll@IFAemail.com",
-            "admin" : True
-          },
-          { 
-            "name" : "David White",
-            "username" : "dwhite",  
-            "password" : b"d_white",
-            "role" : "Team Doctor",
-            "email" : "dwhite@IFAemail.com",
-            "admin" : False
-          }
-       ]
+    {
+        "name": "William Sproule",
+        "username": "wsproule",
+        "password": b"w_sproule",
+        "role": "STF",
+        "email": "w.sprouleGreenwell@gmail.com",
+        "admin": False
+    },
+    {
+        "name": "Steven Irvine",
+        "username": "sirvine",
+        "password": b"s_irvine",
+        "role": "STF",
+        "email": "s.irvineGreenwell@gmail.com",
+        "admin": False
+    },
+    {
+        "name": "David Milligan",
+        "username": "dmilligan",
+        "password": b"d_milligan",
+        "role": "STF",
+        "email": "d.milliganGreenwell@gmail.com",
+        "admin": False
+    },
+    {
+        "name": "Matthew Patton",
+        "username": "mpatton",
+        "password": b"m_patton",
+        "role": "STF",
+        "email": "m.pattonGreenwell@gmail.com",
+        "admin": False
+    }
+]
+
 
 #Encrpyt hash password
 for new_staff_user in staff_list:
