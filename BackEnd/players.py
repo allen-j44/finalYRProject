@@ -620,4 +620,13 @@ player_data = [
         "Mins": 180
     }
     
-    ]
+]
+
+    
+
+# Insert the data into the collection
+collection.insert_many(player_data)
+
+# Close the MongoDB connection
+mongo_client.close()
+
