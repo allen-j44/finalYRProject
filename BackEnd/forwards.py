@@ -16,7 +16,7 @@ collection = db["atksCollection"]
 data = [
     {
         "Team": "1s",
-        "Name": "Nathan Cousins",
+        "Name": "Nathan",
         "Age": 22,
         "POS": "ATK",
         "App": 14,
