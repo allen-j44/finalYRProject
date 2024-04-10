@@ -90,14 +90,20 @@ def add_new_player():
     else:
         return make_response(jsonify({"error": "Missing or invalid form data"}), 400)
 
+
+#DELETE A PLAYER BY ID
+
 @app.route("/api/v1.0/players/<string:id>", methods=["DELETE"])
 def delete_player(id):
+
+    #Check ID is valid
     if len(id) != 24 or not all(c in '0123456789abcdefABCDEF' for c in id):
         return make_response(jsonify({"error" : f"Invalid Player ID: {id}"}), 400)
     
     result = collection.delete_one({"_id" : ObjectId(id)})
 
     if result.deleted_count == 1:
+        #Check no of players deleted is 1
         return make_response(jsonify({"message" : f"Player with ID {id} has been deleted"}), 204)
     else:
         return make_response(jsonify({"error" : f"Player with ID {id} was not found"}), 404)
