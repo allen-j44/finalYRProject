@@ -5,8 +5,8 @@ import json
 import string
 import bcrypt
 from flask import Flask, jsonify, request, make_response
-from jwt import encode, decode
 import jwt
+from jwt import encode, decode
 from pymongo import MongoClient
 from bson import ObjectId
 from pymongo import aggregation
@@ -39,7 +39,7 @@ def jwt_required(func):
         if not token:
             return jsonify( { 'message' : 'Token is missing' }), 401
         try:
-            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms = 'HS256')
+            data = decode(token, app.config['SECRET_KEY'], algorithms = 'HS256')
             print("Decoded token data:", data)  # Print decoded token data for debugging
         except:
             return jsonify( { 'message' : 'My token is invalid' }), 401
@@ -58,8 +58,8 @@ def login():
     if not user or not bcrypt.checkpw(auth.password.encode('utf-8'), user['password']):
         return make_response(jsonify({'message': 'Invalid username or password'}), 401)
 
-    token = jwt.encode({'username': auth.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-    return jsonify({'token': token.decode('UTF-8')}), 200
+    token = encode({'username': auth.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+    return jsonify({'token': token}), 200
 
 
 @app.route("/api/v1.0/players", methods=["GET"])
