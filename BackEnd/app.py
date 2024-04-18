@@ -5,8 +5,7 @@ import json
 import string
 import bcrypt
 from flask import Flask, jsonify, request, make_response
-import jwt
-from jwt import encode, decode
+ # import jwt
 from pymongo import MongoClient
 from bson import ObjectId
 from pymongo import aggregation
@@ -27,39 +26,44 @@ staff = db.staffCollection
 #Add secret key for jwt token
 
 #Functions relating to back-end authentication have been commented out due to issue regarding the JWT Token- Issue spoken about in detail with Adrian and code appears to be correct although not functional
-app.config['SECRET_KEY'] = 'mysecret'
 
-def jwt_required(func):
-    @wraps(func)
-    def jwt_required_wrapper(*args, **kwargs):
-        token = None
-        data = None
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
-        if not token:
-            return jsonify( { 'message' : 'Token is missing' }), 401
-        try:
-            data = decode(token, app.config['SECRET_KEY'], algorithms = 'HS256')
-            print("Decoded token data:", data)  # Print decoded token data for debugging
-        except:
-            return jsonify( { 'message' : 'My token is invalid' }), 401
-        return func(*args, **kwargs)
-    return jwt_required_wrapper
+# Set the secret key for JWT
+# app.config['SECRET_KEY'] = 'mysecret'
 
-# Login endpoint
-@app.route('/api/v1.0/login', methods=['POST'])
-def login():
-    auth = request.authorization
-    if not auth or not auth.username or not auth.password:
-        return make_response(jsonify({'message': 'Invalid username or password'}), 401)
+# from jwt import encode, decode
 
-    user = staff.find_one({'username': auth.username})
+# def jwt_required(func):
+#     @wraps(func)
+#     def jwt_required_wrapper(*args, **kwargs):
+#         token = None
+#         data = None
+#         if 'x-access-token' in request.headers:
+#             token = request.headers['x-access-token']
+#         if not token:
+#             return jsonify( { 'message' : 'Token is missing' }), 401
+#         try:
+#             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms = 'HS256')
+#             print("Decoded token data:", data)  # Print decoded token data for debugging
+#         except:
+#             return jsonify( { 'message' : 'My token is invalid' }), 401
+#         return func(*args, **kwargs)
+#     return jwt_required_wrapper
 
-    if not user or not bcrypt.checkpw(auth.password.encode('utf-8'), user['password']):
-        return make_response(jsonify({'message': 'Invalid username or password'}), 401)
+# # Login endpoint
+# @app.route('/api/v1.0/login', methods=['POST'])
+# def login():
+#     auth = request.authorization
+#     if not auth or not auth.username or not auth.password:
+#         return make_response(jsonify({'message': 'Invalid username or password'}), 401)
 
-    token = encode({'username': auth.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-    return jsonify({'token': token}), 200
+#     user = staff.find_one({'username': auth.username})
+
+#     if not user or not bcrypt.checkpw(auth.password.encode('utf-8'), user['password']):
+#         return make_response(jsonify({'message': 'Invalid username or password'}), 401)
+
+#     token = jwt.encode({'username': auth.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+#     return jsonify({'token': token.decode('UTF-8')}), 200
+
 
 
 @app.route("/api/v1.0/players", methods=["GET"])
