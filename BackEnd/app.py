@@ -148,7 +148,49 @@ def delete_player(id):
     else:
         return make_response(jsonify({"error" : f"Player with ID {id} was not found"}), 404)
 
+@app.route("/api/v1.0/players/<string:id>", methods=["PUT"])
+def edit_player(id):
+
+    # Check if ID is valid
+    if len(id) != 24 or not all(c in '0123456789abcdefABCDEF' for c in id):
+        return make_response(jsonify({"error": "Invalid Player ID"}), 404)
+
+    print("Received Form Data: ", request.form)
     
+    # Check if all required fields are present in the request
+    required_fields = ["Team", "Name", "Age", "POS", "App", "Goal Involvements", "Clean Sheets", "Yellows", "Reds", "Mins"]
+    if all(field in request.form for field in required_fields):
+        # Update player details
+        result = collection.update_one(
+            {"_id": ObjectId(id)},
+            {
+                "$set": {
+                    "Team": request.form["Team"],
+                    "Name": request.form["Name"],
+                    "Age": int(request.form["Age"]),
+                    "POS": request.form["POS"],
+                    "App": int(request.form["App"]),
+                    "Goal Involvements": int(request.form["Goal Involvements"]),
+                    "Clean Sheets": int(request.form["Clean Sheets"]),
+                    "Yellows": int(request.form["Yellows"]),
+                    "Reds": int(request.form["Reds"]),
+                    "Mins": int(request.form["Mins"]),
+                    # Add other fields to update as needed
+                }
+            }      
+        )
+
+        # Check if the update was successful
+        if result.matched_count == 1:
+            # Provide link to the edited player's details
+            edit_player_link = f"http://127.0.0.1:5000/api/v1.0/players/{id}"
+            return make_response(jsonify({"url": edit_player_link}), 200)
+        else:
+            return make_response(jsonify({"error": "Invalid Player ID"}), 404)
+    else:
+        return make_response(jsonify({"error": "Missing Form Data"}), 400)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
