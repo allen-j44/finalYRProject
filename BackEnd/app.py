@@ -81,7 +81,7 @@ def show_all_players():
 
     return make_response(jsonify(players_data), 200)
 
-# Function to retrieve a single player
+# Function to retrieve a single player by their ID
 @app.route("/api/v1.0/players/<string:id>", methods=["GET"])
 def show_one_player(id):
     if len(id) != 24 or not all(c in string.hexdigits for c in id):
@@ -96,6 +96,33 @@ def show_one_player(id):
     else:
         return make_response(jsonify({"error": "Player not found"}), 404)
     
+
+# Get Players in a specific POS
+
+@app.route("/api/v1.0/players/position/<string:position>", methods=["GET"])
+def get_players_by_position(position):
+    players = collection.find({"POS": position})
+    players_data = []
+    for player in players:
+        # Convert ObjectId to string
+        player["_id"] = str(player["_id"])
+        players_data.append(player)
+    if players_data:
+        return make_response(jsonify(players_data), 200)
+    else:
+        return make_response(jsonify({"error": "Players not found for the given position"}), 404)
+    
+@app.route("/api/v1.0/players/name/<string:name>", methods=["GET"])
+def get_player_by_name(name):
+    player = collection.find_one({"Name": name})
+    if player:
+        # Convert ObjectId to string
+        player["_id"] = str(player["_id"])
+        return make_response(jsonify(player), 200)
+    else:
+        return make_response(jsonify({"error": "Player not found"}), 404)
+
+
 # Function to add a new player
 @app.route("/api/v1.0/players", methods=["POST"])
 def add_new_player():
@@ -148,6 +175,8 @@ def delete_player(id):
     else:
         return make_response(jsonify({"error" : f"Player with ID {id} was not found"}), 404)
 
+#Edit a Players Full Profile
+#Do this using x-www-urlencoded in Postamn For Data
 @app.route("/api/v1.0/players/<string:id>", methods=["PUT"])
 def edit_player(id):
 
@@ -189,8 +218,6 @@ def edit_player(id):
             return make_response(jsonify({"error": "Invalid Player ID"}), 404)
     else:
         return make_response(jsonify({"error": "Missing Form Data"}), 400)
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
