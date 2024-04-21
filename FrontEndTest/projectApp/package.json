@@ -1,5 +1,5 @@
 {
-  "name": "greenwell-player-mgmt-app",
+  "name": "project-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:greenwell-player-mgmt-app": "node dist/greenwell-player-mgmt-app/server/server.mjs"
+    "serve:ssr:projectApp": "node dist/project-app/server/server.mjs"
   },
   "private": true,
   "dependencies": {

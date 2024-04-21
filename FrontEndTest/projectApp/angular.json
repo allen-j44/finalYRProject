@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "greenwell-player-mgmt-app": {
+    "projectApp": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/greenwell-player-mgmt-app",
+            "outputPath": "dist/project-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "greenwell-player-mgmt-app:build:production"
+              "buildTarget": "projectApp:build:production"
             },
             "development": {
-              "buildTarget": "greenwell-player-mgmt-app:build:development"
+              "buildTarget": "projectApp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "greenwell-player-mgmt-app:build"
+            "buildTarget": "projectApp:build"
           }
         },
         "test": {
@@ -98,6 +98,6 @@
     }
   },
   "cli": {
-    "analytics": "5658fcca-519d-4b35-b4e6-e92f9d19de5d"
+    "analytics": "a6e6e2b5-0357-40eb-8a1a-77afde6d3ece"
   }
 }

@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'greenwell-player-mgmt-app' title`, () => {
+  it(`should have the 'projectApp' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('greenwell-player-mgmt-app');
+    expect(app.title).toEqual('projectApp');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, greenwell-player-mgmt-app');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, projectApp');
   });
 });
