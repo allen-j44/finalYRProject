@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set the container to full viewport height */
+  }
+  
+  .content {
+    text-align: center;
+  }
+  

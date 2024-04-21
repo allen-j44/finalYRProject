@@ -1,20 +1,14 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
-import { AppRoutingModule } from './app-routing.module'; // Import the routing module if it exists
-import { AppComponent } from './app.component';
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  // Add more routes as needed
+];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    // Declare other components here if needed
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule, // Import the AppRoutingModule if you have routing
-    // Import other Angular modules and third-party modules here
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppModule { }
+export class AppRoutingModule { }
