@@ -1,0 +1,41 @@
+Search By Name: <input type="text" pInputText [(ngModel)]="searchString"/>
+<button pButton pRipple label="Search" class="p-button-success" (click)="Search()"></button>
+<button pButton pRipple label="Clear Search" class="p-button-success" (click)="ClearSearch()"></button>
+
+<p-table [value]="players" [tableStyle]="{ 'min-width': '50rem' }"
+[paginator]="true"
+[rows]="5"
+[showCurrentPageReport]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Age</th>
+            <th>App</th>
+            <th>Clean Sheets</th>
+            <th>Goal Invovements</th>
+            <th>Mins</th>
+            <th>Name</th>
+            <th>Reds</th>
+            <th>Team</th>
+            <th>Yellows</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-player>
+        <tr>
+            <td>{{ player.Age }}</td>
+            <td>{{ player.App }}</td>
+            <td>{{ player["Clean Sheets"] }}</td>
+            <td>{{ player["Goal Involvements"] }}</td>
+            <td>{{player.Mins}}</td>
+            <td>{{player.Name}}</td>
+            <td>{{player.Reds}}</td>
+            <td>{{player.Team}}</td>
+            <td>{{player.Yellows}}</td>
+            <td>
+                <button [routerLink]="['/player', player._id, 'edit']" pButton pRipple label="Edit" class="p-button-success"></button>
+                <button [routerLink]="['/player', player._id]" pButton pRipple label="View" class="p-button-success"></button>
+                <button pButton pRipple label="Delete" class="p-button-success" (click)="delete(player._id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

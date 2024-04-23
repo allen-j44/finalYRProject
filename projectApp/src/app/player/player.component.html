@@ -1,0 +1,62 @@
+<br>
+<br>
+<br>
+
+<div class = "container" style = "margin-top: 70px;">
+  <div class=""row>
+    <div class = "col-sm-12">
+      <div *ngFor = "let player of player | async">
+        <div class = "card text-black bg primary mb-3"
+             style = "width:30rem; margin: auto;">
+          <div class = "header text-center" style = "background-color: #28a745">
+            {{ player.name }}
+          </div>
+          <div class = "card-body">
+            Team: {{ player.team }} <br>
+            Age: {{ player.age }} <br>
+            Appearances: {{ player.appearances }}
+          </div>
+          <div class = "card-footer" style = "background-color: #28a745" >
+            <strong class = "white-background">Managers Comments</strong><br>
+            <div *ngFor="let comment of player.managersComments">
+              <p>{{ comment.comment }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class = "container">
+  <div class = "row">
+    <div class = "col-sm-12">
+        <ng-container
+            *ngIf = "authService.isAuthenticated$ | async;
+            else loggedOut">
+
+            <h2> Enter Text Here to add another Comment</h2>
+
+            <!--  Form for Adding a Comment and Error Handling for if the text field is not filled in-->
+            <form [formGroup] = "commentForm" (ngSubmit) = "onSubmit()">
+              <div class = "form-group">
+                <label class = "bold-label" for = "comment"></label>
+                <textarea name = "comment" id ="comment" rows = "3"
+                          class = "form-control" formControlName = "comment"
+                          [ngClass] = "{'error' : commentForm.controls.comment.invalid && commentForm.controls.comment.touched}"></textarea>
+              </div>
+              <br>
+              <div>
+                <span *ngIf = "isIncomplete()" ><strong>Please ensure that text is entered before hitting submit!</strong></span>
+                <button *ngIf="!isIncomplete()" type="submit" class = "btn.btn-primary">Submit</button>
+              </div>
+            </form>
+        </ng-container>
+        <ng-template #loggedOut>
+            <h2>Please Login to Add a Comment</h2>
+        </ng-template>
+    </div>
+  </div>
+</div>
+
+
+

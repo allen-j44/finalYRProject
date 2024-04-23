@@ -127,19 +127,20 @@ def get_player_by_name(name):
 @app.route("/api/v1.0/players", methods=["POST"])
 def add_new_player():
     # Check if all required fields are present in the request
-    required_fields = ["Team", "Name", "Age", "POS", "App", "Goal Involvements", "Clean Sheets", "Yellows", "Reds", "Mins"]
+    print(request.json)
+    required_fields = ["team", "name", "age", "pos", "app",  "goal", "clean", "yellows", "reds", "mins"]
     if all(field in request.json for field in required_fields):
         new_player = {
-            "Team": request.json["Team"],
-            "Name": request.json["Name"],
-            "Age": int(request.json["Age"]),
-            "POS": request.json["POS"],
-            "App": int(request.json["App"]),
-            "Goal Involvements": int(request.json["Goal Involvements"]),
-            "Clean Sheets": int(request.json["Clean Sheets"]),
-            "Yellows": int(request.json["Yellows"]),
-            "Reds": int(request.json["Reds"]),
-            "Mins": int(request.json["Mins"]),
+            "Team": request.json["team"],
+            "Name": request.json["name"],
+            "Age": int(request.json["age"]),
+            "POS": request.json["pos"],
+            "App": int(request.json["app"]),
+            "Goal Involvements": int(request.json["goal"]),
+            "Clean Sheets": int(request.json["clean"]),
+            "Yellows": int(request.json["yellows"]),
+            "Reds": int(request.json["reds"]),
+            "Mins": int(request.json["mins"]),
             # Include other fields as needed
         }
 
@@ -151,6 +152,7 @@ def add_new_player():
 
         # Convert ObjectId to string
         inserted_player["_id"] = str(inserted_player["_id"])
+        print(inserted_player["_id"])
 
         # Return response with the newly added player
         return make_response(jsonify(inserted_player), 201)
@@ -171,7 +173,7 @@ def delete_player(id):
 
     if result.deleted_count == 1:
         #Check no of players deleted is 1
-        return make_response(jsonify({"message" : f"Player with ID {id} has been deleted"}), 204)
+        return make_response(jsonify({"message" : f"Player with ID {id} has been deleted"}), 200)
     else:
         return make_response(jsonify({"error" : f"Player with ID {id} was not found"}), 404)
 

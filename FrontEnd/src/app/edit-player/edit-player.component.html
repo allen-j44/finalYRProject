@@ -1,0 +1,11 @@
+<p>Age: <input type="text" pInputText [(ngModel)]="player.Age" /></p> 
+<p>App: <input type="text" pInputText [(ngModel)]="player.App" /></p>
+<p>Goal Involvements: <input type="text" pInputText [(ngModel)]="player['Goal Involvements']" /></p>
+<p>Mins: <input type="text" pInputText [(ngModel)]="player.Mins" /></p>
+<p>Name: <input type="text" pInputText [(ngModel)]="player.Name" /></p>
+<p>POS: <input type="text" pInputText [(ngModel)]="player.POS" /></p>
+<p>Reds: <input type="text" pInputText [(ngModel)]="player.Reds" /></p>
+<p>Team: <input type="text" pInputText [(ngModel)]="player.Team" /></p>
+<p>Yellows: <input type="text" pInputText [(ngModel)]="player.Yellows" /></p>
+<p>_id: <input type="text" pInputText [(ngModel)]="player._id" disabled /></p>
+<button pButton pRipple label="Save" class="p-button-success" (click)="SavePlayer()"></button>
